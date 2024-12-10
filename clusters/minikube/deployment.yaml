@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hackathon-deployment
-  namespace: hackathon-namespace
+  namespace: hackathon-change-namespace
 spec:
   replicas: 1
   selector:
