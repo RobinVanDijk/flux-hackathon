@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{branch-name}}-deployment
+  namespace: {{branch-name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{branch-name}}
+  template:
+    metadata:
+      labels:
+        app: {{branch-name}}
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
