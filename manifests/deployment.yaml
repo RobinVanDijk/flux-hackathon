@@ -16,6 +16,7 @@ spec:
       containers:
         - name: php
           image: ghcr.io/robinvandijk/flux-hackathon/php:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 9000
       imagePullSecrets:
@@ -39,6 +40,7 @@ spec:
       containers:
         - name: nginx
           image: ghcr.io/robinvandijk/flux-hackathon/nginx:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
       imagePullSecrets:
