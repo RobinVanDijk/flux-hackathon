@@ -11,3 +11,17 @@ spec:
     kind: GitRepository
     name: flux-hackathon-repo
   targetNamespace: default
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: flux-hackathon-repo
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/RobinVanDijk/flux-hackathon.git
+  ref:
+    branch: production
+  ignore: |
+    /*
+    !/manifests/
