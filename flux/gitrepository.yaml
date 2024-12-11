@@ -1,9 +1,13 @@
-apiVersion: source.toolkit.fluxcd.io/v1
+apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: GitRepository
 metadata:
   name: flux-hackathon-repo
+  namespace: flux-system
 spec:
   interval: 1m
   url: https://github.com/RobinVanDIjk/flux-hackathon.git
   ref:
     branch: production
+  ignore: |
+    /*
+    !/flux/

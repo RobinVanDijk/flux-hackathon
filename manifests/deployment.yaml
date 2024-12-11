@@ -17,6 +17,8 @@ spec:
           image: ghcr.io/robinvandijk/flux-hackathon/php:latest
           ports:
             - containerPort: 9000
+      imagePullSecrets:
+        - name: ghcr-credentials
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,3 +39,5 @@ spec:
           image: ghcr.io/robinvandijk/flux-hackathon/nginx:latest
           ports:
             - containerPort: 80
+      imagePullSecrets:
+        - name: ghcr-credentials
