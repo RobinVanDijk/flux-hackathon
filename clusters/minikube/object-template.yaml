@@ -1,0 +1,47 @@
+apiVersion: templates.kluctl.io/v1alpha1
+kind: ObjectTemplate
+metadata:
+  name: preview
+  namespace: default
+spec:
+  # this is the service account described at the top
+  serviceAccountName: template-controller
+  prune: true
+  matrix:
+    - name: git
+      object:
+        ref:
+          apiVersion: templates.kluctl.io/v1alpha1
+          kind: GitProjector
+          name: preview
+        jsonPath: status.result
+        # status.result is a list of matching branches. Without expandLists being true, the matrix input would treat
+        # that list as a single input, but we actually want the list items being one input per item
+        expandLists: true
+  templates:
+    - object:
+        apiVersion: source.toolkit.fluxcd.io/v1
+        kind: gitRepository
+        metadata:
+          # We can use the branch name as basis for the object name
+          name: "{{ matrix.git.ref.branch | slugify }}"
+          namespace: default
+        spec:
+          interval: 1m
+          deployInterval: "never"
+          timeout: 5m
+          source:
+            url: https://github.com/RobinVanDijk/kluctl-examples.git
+            path: simple-helm
+            ref:
+              # ensure we deploy from the correct branch
+              branch: "{{ matrix.git.ref.branch }}"
+            # secretRef:
+            #  name: git-credentials
+          target: "simple-helm"
+          context: default
+          args:
+            # Look into the simple-helm example to figure out what the environment arg does. It basically sets the
+            # namespace to use, but could theoretically do much more.
+            environment: "{{ matrix.git.ref.branch | slugify }}"
+          prune: true
