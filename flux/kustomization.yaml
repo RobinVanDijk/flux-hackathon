@@ -1,12 +1,13 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: flux-hackathon-kustomization
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./manifests
+  path: ./manifests/
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-hackathon-repo
+  targetNamespace: default
